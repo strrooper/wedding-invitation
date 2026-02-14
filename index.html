@@ -351,6 +351,40 @@
       position: absolute;
     }
 
+    .swipe-indicator {
+      position: absolute;
+      left: -90%;
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      padding: 0.24rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.46);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 6px 14px rgba(155, 90, 110, 0.14);
+      color: #9e4f66;
+      font-family: "Cinzel", "Times New Roman", serif;
+      font-size: clamp(0.6rem, 1.1vw, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation:
+        swipeHintIn 0.6s ease-out 1.05s forwards,
+        swipeHintPulse 2.8s ease-in-out 1.65s infinite;
+    }
+
+    .swipe-indicator .arrow {
+      display: inline-block;
+      font-size: 1.05em;
+      line-height: 1;
+      animation: swipeArrowLeft 1.1s ease-in-out infinite;
+    }
+
     .details-page {
       display: grid;
       place-items: center;
@@ -361,6 +395,10 @@
     .details-card > * {
       position: relative;
       z-index: 1;
+    }
+
+    .details-card a {
+      pointer-events: auto;
     }
 
     .details-top {
@@ -428,6 +466,21 @@
       border-radius: 10px;
       padding: 0.16rem 0.26rem;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+
+    .map-link-row {
+      margin-top: 0.14rem;
+      font-size: clamp(0.54rem, 0.9vw, 0.74rem);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .map-link {
+      color: #8f4d63;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 0.12em;
+      word-break: break-word;
     }
 
     .page-3-card {
@@ -713,6 +766,35 @@
       }
     }
 
+    @keyframes swipeHintIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0.96;
+      }
+    }
+
+    @keyframes swipeHintPulse {
+      0%,
+      100% {
+        box-shadow: 0 6px 14px rgba(155, 90, 110, 0.14);
+      }
+      50% {
+        box-shadow: 0 9px 19px rgba(155, 90, 110, 0.2);
+      }
+    }
+
+    @keyframes swipeArrowLeft {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-6px);
+      }
+    }
+
     @keyframes flakeFall {
       100% {
         transform: translate3d(var(--flake-drift, 0px), 1120px, 0)
@@ -781,6 +863,18 @@
         font-size: clamp(0.82rem, 4vw, 1.25rem);
       }
 
+      .swipe-indicator {
+        left: 50%;
+        right: auto;
+        top: auto;
+        bottom: -15.2%;
+        transform: translateX(-50%);
+        padding: 0.2rem 0.42rem;
+        gap: 0.28rem;
+        font-size: clamp(0.52rem, 2.2vw, 0.7rem);
+        letter-spacing: 0.07em;
+      }
+
       .bokeh-layer {
         opacity: 0.56;
       }
@@ -839,6 +933,10 @@
         font-size: clamp(0.47rem, 1.8vw, 0.64rem);
         gap: 0.2rem;
         margin: 0.06rem 0;
+      }
+
+      .map-link-row {
+        font-size: clamp(0.47rem, 1.78vw, 0.64rem);
       }
 
 
@@ -951,6 +1049,8 @@
       .sparkle-layer::before,
       .sparkle-layer::after,
       .flake,
+      .swipe-indicator,
+      .swipe-indicator .arrow,
       .save-date,
       .couple,
       .meta,
@@ -975,6 +1075,7 @@
       <div class="meta">Wednesday - At 08:00 PM</div>
       <div class="big-date"><span class="day">11</span><span class="month">March</span></div>
       <div class="year">2026</div>
+      <div class="swipe-indicator" aria-hidden="true"><span>Swipe left</span><span class="arrow">←</span></div>
     </section>
 
     <section class="page details-page" aria-label="Mangalik Karyakram Details">
@@ -999,6 +1100,7 @@
         <div class="day-title">बुधवार, 11 मार्च 2026</div>
         <div class="item-line"><span class="label">बारात प्रस्थान</span><span class="dots"></span><span class="time">10:00 बजे प्रातः</span></div>
         <div class="item-line"><span class="label">विवाह संस्कार</span><span class="dots"></span><span class="time">शुभ लग्नानुसार</span></div>
+        <div class="map-link-row">विवाह स्थल (11 मार्च): <a class="map-link" href="https://maps.app.goo.gl/xkjpdWWdFRMeJK7R8" target="_blank" rel="noopener noreferrer">Google Maps Location</a></div>
         <div class="note">नोटः- बारात हमारे निज निवास स्थान से "राज पैलेस" भिवानी हरियाणा के लिए प्रस्थान करेगी।</div>
         <div class="day-title">बृहस्पतिवार, 12 मार्च 2026</div>
         <div class="item-line"><span class="label">वर-वधू गृह प्रवेश</span><span class="dots"></span><span class="time">02:00 बजे दोपहर</span></div>
