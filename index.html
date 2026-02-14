@@ -22,6 +22,12 @@
     body {
       min-height: 100vh;
       min-height: 100svh;
+      --bokeh-speed-main: 15s;
+      --bokeh-speed-alt: 22s;
+      --bokeh-speed-wide: 30s;
+      --sparkle-speed-main: 8.5s;
+      --sparkle-speed-alt: 13s;
+      --sparkle-speed-wide: 19s;
       background: url("images/background.png") center/cover no-repeat;
       overflow: hidden;
       display: grid;
@@ -88,6 +94,13 @@
       will-change: transform, opacity, background-position;
     }
 
+    .bokeh-layer,
+    .bokeh-layer::before,
+    .bokeh-layer::after {
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
     .bokeh-layer {
       background-image:
         radial-gradient(circle at 10% 22%, rgba(255, 255, 255, 0.35) 0px, rgba(255, 255, 255, 0.35) 10px, rgba(255, 255, 255, 0) 30px),
@@ -96,8 +109,44 @@
         radial-gradient(circle at 56% 64%, rgba(255, 246, 251, 0.26) 0px, rgba(255, 246, 251, 0.26) 9px, rgba(255, 246, 251, 0) 26px),
         radial-gradient(circle at 82% 26%, rgba(255, 255, 255, 0.33) 0px, rgba(255, 255, 255, 0.33) 11px, rgba(255, 255, 255, 0) 33px),
         radial-gradient(circle at 88% 78%, rgba(255, 244, 250, 0.31) 0px, rgba(255, 244, 250, 0.31) 10px, rgba(255, 244, 250, 0) 30px);
-      opacity: 0.75;
-      animation: bokehFloat 10s ease-in-out infinite alternate;
+      opacity: 0.66;
+      animation: bokehDriftMain var(--bokeh-speed-main) ease-in-out infinite;
+    }
+
+    .bokeh-layer::before,
+    .bokeh-layer::after {
+      content: "";
+      position: absolute;
+      inset: -2%;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .bokeh-layer::before {
+      background-image:
+        radial-gradient(circle at 14% 58%, rgba(255, 255, 255, 0.32) 0px, rgba(255, 255, 255, 0.32) 8px, rgba(255, 255, 255, 0) 26px),
+        radial-gradient(circle at 33% 24%, rgba(255, 243, 250, 0.28) 0px, rgba(255, 243, 250, 0.28) 10px, rgba(255, 243, 250, 0) 30px),
+        radial-gradient(circle at 67% 78%, rgba(255, 255, 255, 0.3) 0px, rgba(255, 255, 255, 0.3) 11px, rgba(255, 255, 255, 0) 33px),
+        radial-gradient(circle at 92% 42%, rgba(255, 236, 246, 0.28) 0px, rgba(255, 236, 246, 0.28) 9px, rgba(255, 236, 246, 0) 28px);
+      opacity: 0.5;
+      filter: blur(0.35px);
+      animation: bokehDriftAlt var(--bokeh-speed-alt) ease-in-out infinite;
+    }
+
+    .bokeh-layer::after {
+      background-image:
+        radial-gradient(circle at 7% 81%, rgba(255, 255, 255, 0.28) 0px, rgba(255, 255, 255, 0.28) 9px, rgba(255, 255, 255, 0) 27px),
+        radial-gradient(circle at 47% 9%, rgba(255, 239, 248, 0.3) 0px, rgba(255, 239, 248, 0.3) 12px, rgba(255, 239, 248, 0) 34px),
+        radial-gradient(circle at 74% 57%, rgba(255, 255, 255, 0.26) 0px, rgba(255, 255, 255, 0.26) 7px, rgba(255, 255, 255, 0) 22px),
+        radial-gradient(circle at 94% 18%, rgba(255, 241, 249, 0.27) 0px, rgba(255, 241, 249, 0.27) 8px, rgba(255, 241, 249, 0) 24px);
+      opacity: 0.42;
+      animation: bokehDriftWide var(--bokeh-speed-wide) ease-in-out infinite reverse;
+    }
+
+    .sparkle-layer,
+    .sparkle-layer::before,
+    .sparkle-layer::after {
+      background-repeat: repeat;
     }
 
     .sparkle-layer {
@@ -107,8 +156,37 @@
         radial-gradient(circle, rgba(255, 231, 243, 0.55) 0.9px, transparent 1.8px);
       background-size: 16px 16px, 26px 26px, 38px 38px;
       background-position: 0 0, 11px 9px, 19px 14px;
-      opacity: 0.35;
-      animation: sparkleFloat 7.5s linear infinite, sparklePulse 2.2s ease-in-out infinite alternate;
+      opacity: 0.34;
+      animation: sparkleDriftMain var(--sparkle-speed-main) linear infinite, sparklePulse 2.2s ease-in-out infinite alternate;
+    }
+
+    .sparkle-layer::before,
+    .sparkle-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      will-change: background-position, opacity;
+    }
+
+    .sparkle-layer::before {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.46) 0.8px, transparent 1.6px),
+        radial-gradient(circle, rgba(255, 237, 247, 0.4) 0.9px, transparent 1.8px);
+      background-size: 20px 20px, 34px 34px;
+      background-position: 5px 4px, 17px 13px;
+      opacity: 0.31;
+      animation: sparkleDriftAlt var(--sparkle-speed-alt) linear infinite reverse;
+    }
+
+    .sparkle-layer::after {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.58) 0.9px, transparent 1.9px),
+        radial-gradient(circle, rgba(255, 231, 243, 0.45) 0.8px, transparent 1.8px);
+      background-size: 28px 28px, 46px 46px;
+      background-position: 3px 12px, 24px 5px;
+      opacity: 0.24;
+      animation: sparkleDriftWide var(--sparkle-speed-wide) linear infinite;
     }
 
     .center-image {
@@ -300,7 +378,7 @@
 
     .note {
       margin-top: 0.22rem;
-      font-size: clamp(0.54rem, 0.9vw, 0.74rem);
+      font-size: clamp(0.88rem, 0.9vw, 0.74rem);
       text-align: center;
       background: rgba(255, 255, 255, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.74);
@@ -312,41 +390,66 @@
     .page-3-card {
       line-height: 1.2;
       padding: clamp(0.62rem, 1.1vw, 1rem);
+      color: #a85b72;
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+
+    .page-3-card > * {
+      width: min(100%, 95%);
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .page3-header {
-      display: grid;
-      grid-template-columns: 72px 1fr 72px;
-      gap: 0.4rem;
+      width: min(100%, 90%);
+      margin: 0 auto 2.16rem;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-bottom: 0.16rem;
+      justify-content: center;
+      gap: 0.08rem;
+      text-align: center;
     }
 
     .page3-icon {
       font-size: clamp(1.45rem, 2.2vw, 2rem);
       line-height: 1;
       font-weight: 700;
-      color: #6f394e;
-      opacity: 0.88;
+      color: inherit;
+      opacity: 1;
     }
 
     .page3-prayer .details-top {
       margin-bottom: 0.08rem;
     }
 
+    .page3-header .details-top {
+      margin-bottom: 0;
+      text-align: center;
+    }
+
     .page3-verse {
       font-size: clamp(0.62rem, 0.95vw, 0.82rem);
+      line-height: 1.28;
+      max-width: 36ch;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
       margin-bottom: 0;
     }
 
     .page3-body {
       font-size: clamp(0.58rem, 0.9vw, 0.74rem);
+      line-height: 1.28;
       margin-bottom: 0.06rem;
     }
 
     .page3-intro {
       font-size: clamp(0.58rem, 0.9vw, 0.74rem);
       margin: 0.12rem 0 0.06rem;
+      margin-left: 1rem;
+      text-align: left;
     }
 
     .page3-name {
@@ -354,11 +457,12 @@
       font-size: clamp(1.1rem, 1.95vw, 1.7rem);
       line-height: 1.06;
       margin: 0.1rem 0 0.06rem;
-      color: #612d42;
+      color: inherit;
     }
 
     .page3-sub {
       font-size: clamp(0.56rem, 0.86vw, 0.72rem);
+      line-height: 1.22;
       margin-bottom: 0.04rem;
     }
 
@@ -372,7 +476,8 @@
       font-weight: 700;
       font-size: clamp(0.98rem, 1.65vw, 1.42rem);
       margin: 0.12rem 0 0.08rem;
-      color: #5a2439;
+      color: inherit;
+      white-space: nowrap;
     }
 
     .page3-text {
@@ -380,36 +485,46 @@
       margin-bottom: 0.04rem;
     }
 
+    .page3-text.one-line {
+      white-space: nowrap;
+    }
+
     .page3-quote {
       margin: 0.1rem auto;
-      max-width: 92%;
+      max-width: 100%;
       font-size: clamp(0.56rem, 0.88vw, 0.74rem);
-      line-height: 1.25;
+      line-height: 1.33;
       font-weight: 600;
+      text-align: center;
     }
 
     .page3-lists {
-      margin-top: 0.08rem;
+      width: min(100%, 94%);
+      margin-top: 0.14rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.7rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
       text-align: left;
+      align-items: start;
     }
 
     .page3-list {
-      padding: 0 0.18rem;
+      padding: 0 0.12rem;
     }
 
     .page3-list-title {
       font-weight: 700;
       font-size: clamp(0.65rem, 0.99vw, 0.82rem);
-      margin-bottom: 0.08rem;
+      margin-bottom: 0.12rem;
       text-decoration: underline;
+      text-underline-offset: 0.14em;
+      text-decoration-thickness: 1px;
     }
 
     .page3-line {
       font-size: clamp(0.54rem, 0.84vw, 0.7rem);
       margin: 0.03rem 0;
+      line-height: 1.28;
     }
 
     @keyframes textFadeIn {
@@ -442,21 +557,102 @@
       }
     }
 
-    @keyframes bokehFloat {
-      0% {
-        transform: translate3d(-1.2%, -0.8%, 0) scale(1);
+    @keyframes bokehDriftMain {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
       }
-      100% {
-        transform: translate3d(1.2%, 1%, 0) scale(1.03);
+      20% {
+        transform: translate3d(-1.7%, 1.4%, 0) scale(1.02);
+      }
+      40% {
+        transform: translate3d(1.9%, 1.6%, 0) scale(1.03);
+      }
+      60% {
+        transform: translate3d(1.4%, -1.4%, 0) scale(1.01);
+      }
+      80% {
+        transform: translate3d(-1.5%, -1.7%, 0) scale(1.02);
       }
     }
 
-    @keyframes sparkleFloat {
-      0% {
+    @keyframes bokehDriftAlt {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      25% {
+        transform: translate3d(2.2%, -1.3%, 0) scale(1.04);
+      }
+      50% {
+        transform: translate3d(-1.8%, 1.8%, 0) scale(1.02);
+      }
+      75% {
+        transform: translate3d(1.1%, 2.1%, 0) scale(1.03);
+      }
+    }
+
+    @keyframes bokehDriftWide {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      30% {
+        transform: translate3d(-2.4%, -1.6%, 0) scale(1.04);
+      }
+      55% {
+        transform: translate3d(2.1%, -2.1%, 0) scale(1.02);
+      }
+      80% {
+        transform: translate3d(-1.3%, 2.2%, 0) scale(1.03);
+      }
+    }
+
+    @keyframes sparkleDriftMain {
+      0%, 100% {
         background-position: 0 0, 11px 9px, 19px 14px;
       }
-      100% {
-        background-position: 24px 20px, 38px 30px, 58px 42px;
+      20% {
+        background-position: -8px 10px, 20px 1px, 11px 24px;
+      }
+      40% {
+        background-position: 14px 17px, 0 23px, 29px 9px;
+      }
+      60% {
+        background-position: 22px -3px, 35px 19px, 8px 5px;
+      }
+      80% {
+        background-position: 7px -14px, 25px -3px, 33px 18px;
+      }
+    }
+
+    @keyframes sparkleDriftAlt {
+      0%, 100% {
+        background-position: 5px 4px, 17px 13px;
+      }
+      25% {
+        background-position: 14px -6px, 3px 29px;
+      }
+      50% {
+        background-position: -6px 22px, 27px 5px;
+      }
+      75% {
+        background-position: 22px 16px, 35px -4px;
+      }
+    }
+
+    @keyframes sparkleDriftWide {
+      0%, 100% {
+        background-position: 3px 12px, 24px 5px;
+      }
+      20% {
+        background-position: 23px 3px, 40px 21px;
+      }
+      40% {
+        background-position: 10px 26px, 12px 31px;
+      }
+      60% {
+        background-position: -9px 8px, 29px -8px;
+      }
+      80% {
+        background-position: 8px -12px, 46px 3px;
       }
     }
 
@@ -529,11 +725,27 @@
       }
 
       .bokeh-layer {
-        opacity: 0.62;
+        opacity: 0.56;
+      }
+
+      .bokeh-layer::before {
+        opacity: 0.44;
+      }
+
+      .bokeh-layer::after {
+        opacity: 0.36;
       }
 
       .sparkle-layer {
         opacity: 0.28;
+      }
+
+      .sparkle-layer::before {
+        opacity: 0.25;
+      }
+
+      .sparkle-layer::after {
+        opacity: 0.2;
       }
 
       .details-card {
@@ -575,9 +787,13 @@
         line-height: 1.08;
       }
 
+      .page-3-card > * {
+        width: min(100%, 97%);
+      }
+
       .page3-header {
-        grid-template-columns: 42px 1fr 42px;
-        gap: 0.18rem;
+        width: min(100%, 96%);
+        gap: 0.06rem;
         margin-bottom: 0.1rem;
       }
 
@@ -616,6 +832,7 @@
       }
 
       .page3-lists {
+        width: min(100%, 97%);
         gap: 0.38rem;
       }
 
@@ -627,7 +844,11 @@
 
     @media (prefers-reduced-motion: reduce) {
       .bokeh-layer,
+      .bokeh-layer::before,
+      .bokeh-layer::after,
       .sparkle-layer,
+      .sparkle-layer::before,
+      .sparkle-layer::after,
       .save-date,
       .couple,
       .meta,
@@ -639,6 +860,7 @@
   </style>
 </head>
 <body>
+  <audio id="bg-music" src="images/music.mp3" autoplay loop preload="auto"></audio>
   <main class="invite" aria-label="Wedding Invitation Front">
     <div class="bokeh-layer" aria-hidden="true"></div>
     <div class="sparkle-layer" aria-hidden="true"></div>
@@ -689,45 +911,43 @@
     <section class="page details-page" aria-label="Wedding Family Invitation">
       <article class="details-card page-3-card">
         <div class="page3-header">
-          <div class="page3-icon">ॐ</div>
-          <div class="page3-prayer">
             <div class="details-top">।। श्री गणेशाय नमः ।।</div>
             <div class="page3-verse">
               प्रथम निमंत्रण आपको, गौरी पुत्र गणेश।<br />
               मंगल कार्य पूर्ण करें, ब्रह्मा विष्णु महेरा ।।
-            </div>
           </div>
-          <div class="page3-icon">श्री</div>
         </div>
 
         <div class="page3-intro">मान्यवर,</div>
         <div class="page3-body">परमपिता परमात्मा एवं पितृ देवों की असीम अनुकम्पा से</div>
         <div class="page3-body">स्व० श्रीमती धनी देवी एवं श्री जगत सिंह बिष्ट अपने प्रिय सुपौत्र</div>
-
-        <div class="page3-name">चि० सौरभ बिष्ट</div>
+        </br>
+        <div class="page3-name">चि० सौरभ</div>
         <div class="page3-sub">(सुपुत्र श्रीमती सावित्री देवी एवं श्री राम सिंह बिष्ट)</div>
 
         <div class="page3-mid">संग</div>
 
-        <div class="page3-name">आयु० कनिष्का शर्मा</div>
-        <div class="page3-sub">(सुपुत्री स्व० श्रीमती राधिका देवी एवं श्री नरेश कुमार)</div>
-        <div class="page3-sub">(निवासी-52/1, म.नं.8, गुड़गाँव, हरियाणा)</div>
+        <div class="page3-name">आयु० कनिष्का</div>
+        <div class="page3-sub">(सुपुत्री स्व० श्रीमती राधिका देवी एवं श्री नरेश शर्मा)</div>
+        </br>
 
-        <div class="page3-highlight">ॐ के शुभ विवाहोत्सव ॐ</div>
-        <div class="page3-text">की मधुर बेला पर आपको कार्यक्रमानुसार सादर आमन्त्रित करती हैं। कृपया पधारकर</div>
+        <div class="page3-highlight">ॐ &nbsp;&nbsp;&nbsp;के शुभ विवाहोत्सव&nbsp;&nbsp;&nbsp;ॐ</div>
+        <div class="page3-text one-line">की मधुर बेला पर आपको कार्यक्रमानुसार सादर आमन्त्रित करती हैं। कृपया पधारकर</div>
         <div class="page3-text">नवयुगल के भावी जीवन को अपने स्नेहाशीष प्रदान कर, हमें अनुग्रहित करें।</div>
-
+        </br>
         <div class="page3-quote">
           खुशियों की सौगात होगी, जरुन जरा डट के होगा,<br />
           हमारे चाचा की शादी मैं, अन्दाज जरा हट के होगा।<br />
           - कान्हा, दिविसा..!
         </div>
-
+        </br>        </br>
         <div class="page3-lists">
           <div class="page3-list">
             <div class="page3-list-title">दर्शनाभिलाषी :-</div>
             <div class="page3-line">लक्ष्मण सिंह बिष्ट (चाचा जी)</div>
+            <div class="page3-line">भागीरथी देवी (चाची जी)</div>
             <div class="page3-line">भरत सिंह बिष्ट (चाचा जी)</div>
+            <div class="page3-line">अंजलि देवी (चाची जी)</div>
             <div class="page3-line">प्रकाश सिंह बिष्ट (चाचा जी)</div>
             <div class="page3-line">दर्शन सिंह बिष्ट (चाचा जी)</div>
             <div class="page3-line">राजेन्द्र सिंह बिष्ट (चाचा जी)</div>
@@ -736,11 +956,12 @@
           <div class="page3-list">
             <div class="page3-list-title">विनीत :-</div>
             <div class="page3-line">कुलदीप बिष्ट (भाई)</div>
+            <div class="page3-line">मोनिका बिष्ट (भाभी जी)</div>
             <div class="page3-line">हिमांशु बिष्ट (भाई)</div>
             <div class="page3-line">कु० सुधा बिष्ट (बहन)</div>
             <div class="page3-line">कु० सोनी बिष्ट (बहन)</div>
-            <div class="page3-line">कमलेश बिष्ट (भाई)</div>
-            <div class="page3-line">मोनिका बिष्ट (भाभी जी)</div>
+            <div class="page3-line">आशु बिष्ट (भाई)</div>
+          
           </div>
         </div>
       </article>
@@ -750,13 +971,43 @@
 
   <script>
     (() => {
+      const bgMusic = document.getElementById("bg-music");
+      if (bgMusic) {
+        const tryPlayMusic = () => {
+          const playAttempt = bgMusic.play();
+          if (playAttempt && typeof playAttempt.catch === "function") {
+            playAttempt.catch(() => {});
+          }
+        };
+
+        const unlockMusic = () => {
+          tryPlayMusic();
+          if (!bgMusic.paused) {
+            window.removeEventListener("pointerdown", unlockMusic);
+            window.removeEventListener("touchstart", unlockMusic);
+            window.removeEventListener("keydown", unlockMusic);
+          }
+        };
+
+        tryPlayMusic();
+        window.addEventListener("pointerdown", unlockMusic, { passive: true });
+        window.addEventListener("touchstart", unlockMusic, { passive: true });
+        window.addEventListener("keydown", unlockMusic);
+      }
+
       const pages = Array.from(document.querySelectorAll(".page"));
       let currentPage = 0;
       let turning = false;
       let touchStartX = 0;
       let touchStartY = 0;
+      let trackingTouchSwipe = false;
       let wheelLock = false;
-      const MIN_SWIPE = 35;
+      const MIN_SWIPE_DISTANCE = 72;
+      const DIRECTION_LOCK_RATIO = 1.35;
+
+      function isZoomed() {
+        return !!window.visualViewport && window.visualViewport.scale > 1.01;
+      }
 
       function setPage(index) {
         pages.forEach((page, i) => page.classList.toggle("active", i === index));
@@ -786,6 +1037,7 @@
       }
 
       window.addEventListener("wheel", (event) => {
+        if (event.ctrlKey || isZoomed()) return;
         if (wheelLock) return;
         if (Math.abs(event.deltaX) < 22 && Math.abs(event.deltaY) < 22) return;
         wheelLock = true;
@@ -796,20 +1048,41 @@
       }, { passive: true });
 
       window.addEventListener("touchstart", (event) => {
+        if (event.touches.length !== 1 || isZoomed()) {
+          trackingTouchSwipe = false;
+          return;
+        }
         const touch = event.touches[0];
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
+        trackingTouchSwipe = true;
+      }, { passive: true });
+
+      window.addEventListener("touchmove", (event) => {
+        if (event.touches.length !== 1) {
+          trackingTouchSwipe = false;
+        }
       }, { passive: true });
 
       window.addEventListener("touchend", (event) => {
+        if (!trackingTouchSwipe || isZoomed()) return;
+        if (event.changedTouches.length !== 1) return;
+        trackingTouchSwipe = false;
+
         const touch = event.changedTouches[0];
         const dx = touch.clientX - touchStartX;
         const dy = touch.clientY - touchStartY;
-        if (Math.abs(dx) > MIN_SWIPE || Math.abs(dy) > MIN_SWIPE) {
-          const horizontal = Math.abs(dx) >= Math.abs(dy);
-          const forward = horizontal ? dx < 0 : dy < 0;
-          turnPage(forward ? 1 : -1);
-        }
+        const absX = Math.abs(dx);
+        const absY = Math.abs(dy);
+        const horizontal = absX >= absY;
+        const primary = horizontal ? absX : absY;
+        const secondary = horizontal ? absY : absX;
+
+        if (primary < MIN_SWIPE_DISTANCE) return;
+        if (secondary > primary / DIRECTION_LOCK_RATIO) return;
+
+        const forward = horizontal ? dx < 0 : dy < 0;
+        turnPage(forward ? 1 : -1);
       }, { passive: true });
 
       window.addEventListener("keydown", (event) => {
